@@ -1,0 +1,35 @@
+[
+    {
+        "course_id": "1",
+        "course_name": "EECE 435L",
+        "instructor": {
+            "name": "Test",
+            "age": 54,
+            "email": "test@gmail.com",
+            "instructor_id": "12345",
+            "assigned_courses": [
+                "1"
+            ]
+        },
+        "enrolled_students": [
+            "202204661",
+            "123456789"
+        ]
+    },
+    {
+        "course_id": "2",
+        "course_name": "EECE 439",
+        "instructor": {
+            "name": "Other",
+            "age": 72,
+            "email": "other@aub.edu.lb",
+            "instructor_id": "123456",
+            "assigned_courses": [
+                "2"
+            ]
+        },
+        "enrolled_students": [
+            "123456789"
+        ]
+    }
+]

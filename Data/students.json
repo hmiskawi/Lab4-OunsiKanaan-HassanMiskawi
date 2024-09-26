@@ -1,0 +1,21 @@
+[
+    {
+        "name": "Hassan",
+        "age": 20,
+        "email": "hhm30@mail.aub.edu",
+        "student_id": "202204661",
+        "registered_courses": [
+            "1"
+        ]
+    },
+    {
+        "name": "Bob",
+        "age": 21,
+        "email": "bob@mail.aub.edu",
+        "student_id": "123456789",
+        "registered_courses": [
+            "2",
+            "1"
+        ]
+    }
+]
