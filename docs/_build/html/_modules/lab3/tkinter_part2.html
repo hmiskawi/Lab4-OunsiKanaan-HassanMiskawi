@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lab3.tkinter_part2 &mdash; Lab3 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Lab3
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">lab3</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Lab3</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lab3.tkinter_part2</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lab3.tkinter_part2</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">messagebox</span>
+<span class="kn">from</span> <span class="nn">OOP.course</span> <span class="kn">import</span> <span class="n">Course</span>
+<span class="kn">from</span> <span class="nn">OOP.instructor</span> <span class="kn">import</span> <span class="n">Instructor</span>
+<span class="kn">from</span> <span class="nn">OOP.student</span> <span class="kn">import</span> <span class="n">Student</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<div class="viewcode-block" id="SchoolManagementApp">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp">[docs]</a>
+<span class="k">class</span> <span class="nc">SchoolManagementApp</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    The SchoolManagementApp class creates a GUI for managing students, instructors, and courses.</span>
+
+<span class="sd">    :param root: The root window for the application.</span>
+<span class="sd">    :type root: tkinter.Tk</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Initializes the SchoolManagementApp with a main window and sets up frames for navigation.</span>
+
+<span class="sd">        :param root: The root window for the application.</span>
+<span class="sd">        :type root: tkinter.Tk</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;School Management System&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">state</span><span class="p">(</span><span class="s1">&#39;zoomed&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Frame setup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="c1"># Main menu UI components</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;School Management System&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Student&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_student_form</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Instructor&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_instructor_form</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Course&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_course_form</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Register for Course&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_register_course_form</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Assign Instructor&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_assign_instructor_form</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_students_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;View All Students&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">display_all_students</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_students_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_instructors_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;View All Instructors&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">display_all_instructors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_instructors_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_courses_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;View All Courses&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">display_all_courses</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_courses_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Search&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_search_form</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Create forms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_student_form</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_instructor_form</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_course_form</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_register_course_form</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_assign_instructor_form</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_search_form</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SchoolManagementApp.create_student_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.create_student_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_student_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Creates the UI for adding a new student.&#39;&#39;&#39;</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Student&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_name_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_age_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">IntVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_email_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">student_name_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Age&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">student_age_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Email&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">student_email_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Student ID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">student_id_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_student</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Back to Main Menu&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.create_instructor_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.create_instructor_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_instructor_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Creates the UI for adding a new instructor.&#39;&#39;&#39;</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Instructor&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">IntVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_name_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Age&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_age_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Email&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_email_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Instructor ID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_id_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_instructor</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Back to Main Menu&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.create_course_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.create_course_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_course_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Creates the UI for adding a new course.&#39;&#39;&#39;</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Course&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_id_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_name_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Course ID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">course_id_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Course Name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">course_name_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_course</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Back to Main Menu&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.create_register_course_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.create_register_course_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_register_course_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Creates the UI for registering a student for a course.&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Register for Course&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_student_id_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_course_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Student ID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">register_student_id_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Select Course&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="n">courses</span> <span class="o">=</span> <span class="n">Course</span><span class="o">.</span><span class="n">load_all_courses</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">courses</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_course_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">courses</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">course_dropdown</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">OptionMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_course_var</span><span class="p">,</span> <span class="o">*</span><span class="n">courses</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selected_course_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;No available courses&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">course_dropdown</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">OptionMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_course_var</span><span class="p">,</span> <span class="s2">&quot;No available courses&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_dropdown</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Register&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">register_student_for_course</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Back to Main Menu&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.create_assign_instructor_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.create_assign_instructor_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_assign_instructor_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Creates the UI for assigning an instructor to a course.&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Assign Instructor to Course&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_id_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Instructor ID&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_id_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Select Course&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="n">courses</span> <span class="o">=</span> <span class="n">Course</span><span class="o">.</span><span class="n">load_all_courses</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">courses</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">courses</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_dropdown</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">OptionMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_var</span><span class="p">,</span> <span class="o">*</span><span class="n">courses</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;No available courses&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_dropdown</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">OptionMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_var</span><span class="p">,</span> <span class="s2">&quot;No available courses&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_dropdown</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Assign&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_to_course</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Back to Main Menu&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.create_display_treeview">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.create_display_treeview">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_display_treeview</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Creates a Treeview for displaying records.</span>
+
+<span class="sd">        :param headers: The column headers for the Treeview.</span>
+<span class="sd">        :type headers: list</span>
+<span class="sd">        :param data: The data to display in the Treeview.</span>
+<span class="sd">        :type data: list of tuples</span>
+<span class="sd">        :param category: The category of records being displayed.</span>
+<span class="sd">        :type category: str</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="o">.</span><span class="n">winfo_children</span><span class="p">():</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Treeview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="s1">&#39;headings&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_edit_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Edit&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_edit</span><span class="p">(</span><span class="n">category</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_edit_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Delete&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">delete_record</span><span class="p">(</span><span class="n">category</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Back to Main Menu&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_all_frames</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.create_search_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.create_search_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_search_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Creates the UI for searching records.&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Search&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_by_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Search By&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">search_by_dropdown</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Combobox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">search_by_var</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Name&quot;</span><span class="p">])</span>
+        <span class="n">search_by_dropdown</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_in_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;Student&quot;</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Search In&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">search_in_dropdown</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Combobox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">search_in_var</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Student&quot;</span><span class="p">,</span> <span class="s2">&quot;Instructor&quot;</span><span class="p">,</span> <span class="s2">&quot;Course&quot;</span><span class="p">])</span>
+        <span class="n">search_in_dropdown</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_value_var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Enter value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">search_value_var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Search&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">perform_search</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Back to Main Menu&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.add_student">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.add_student">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_student</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Adds a new student to the system.</span>
+
+<span class="sd">        Retrieves student data from the form and saves it to a file.</span>
+
+<span class="sd">        :raises: ValueError: If any field is empty.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_name_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_age_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_email_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">student_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_id_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">and</span> <span class="n">age</span> <span class="ow">and</span> <span class="n">email</span> <span class="ow">and</span> <span class="n">student_id</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">student_id</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="n">student</span><span class="o">.</span><span class="n">save_to_file</span><span class="p">(</span><span class="s1">&#39;Data/students.json&#39;</span><span class="p">)</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Student added successfully&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clear_student_fields</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">()</span> 
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;All fields must be filled&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.add_instructor">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.add_instructor">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_instructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Adds a new instructor to the system.</span>
+
+<span class="sd">        Retrieves instructor data from the form and saves it to a file.</span>
+
+<span class="sd">        :raises: ValueError: If any field is empty.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">instructor_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">and</span> <span class="n">age</span> <span class="ow">and</span> <span class="n">email</span> <span class="ow">and</span> <span class="n">instructor_id</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">instructor</span> <span class="o">=</span> <span class="n">Instructor</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">instructor_id</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="n">instructor</span><span class="o">.</span><span class="n">save_to_file</span><span class="p">(</span><span class="s1">&#39;Data/instructors.json&#39;</span><span class="p">)</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Instructor added successfully&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clear_instructor_fields</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">()</span>  
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;All fields must be filled&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.add_course">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.add_course">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_course</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Adds a new course to the system.</span>
+
+<span class="sd">        Retrieves course data from the form and saves it to a file.</span>
+
+<span class="sd">        :raises: ValueError: If any field is empty.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">course_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_id_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">course_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_name_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">course_id</span> <span class="ow">and</span> <span class="n">course_name</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">course</span> <span class="o">=</span> <span class="n">Course</span><span class="p">(</span><span class="n">course_id</span><span class="p">,</span> <span class="n">course_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="n">course</span><span class="o">.</span><span class="n">save_to_file</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">)</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Course added successfully&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clear_course_fields</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;All fields must be filled&quot;</span><span class="p">)</span></div>
+
+
+    
+<div class="viewcode-block" id="SchoolManagementApp.hide_all_frames">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.hide_all_frames">[docs]</a>
+    <span class="k">def</span> <span class="nf">hide_all_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Hides all frames in the application.</span>
+
+<span class="sd">        This method ensures that only one frame is visible at a time by packing</span>
+<span class="sd">        all frames with `pack_forget()`.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>    
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>    
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="o">.</span><span class="n">pack_forget</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.show_student_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.show_student_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_student_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Displays the student form for adding a new student.</span>
+
+<span class="sd">        This method hides all other frames and displays the student form.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_all_frames</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.show_instructor_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.show_instructor_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_instructor_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Displays the instructor form for adding a new instructor.</span>
+
+<span class="sd">        This method hides all other frames and displays the instructor form.</span>
+<span class="sd">        &#39;&#39;&#39;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_all_frames</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.show_course_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.show_course_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_course_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Displays the course form for adding a new course.</span>
+
+<span class="sd">        This method hides all other frames and displays the course form.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_all_frames</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="SchoolManagementApp.show_search_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.show_search_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_search_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Displays the search form for querying records.</span>
+
+<span class="sd">        This method hides all other frames and displays the search form.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_all_frames</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="SchoolManagementApp.show_register_course_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.show_register_course_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_register_course_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Displays the form for registering a student in a course.</span>
+
+<span class="sd">        This method hides all other frames, creates the registration form, and displays it.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_all_frames</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_register_course_form</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_course_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.show_assign_instructor_form">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.show_assign_instructor_form">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_assign_instructor_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Displays the form for assigning an instructor to a course.</span>
+
+<span class="sd">        This method hides all other frames, creates the assignment form, and displays it.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_all_frames</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_assign_instructor_form</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.show_main_menu">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.show_main_menu">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_main_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Displays the main menu of the application.</span>
+
+<span class="sd">        This method hides all other frames and displays the main menu.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_all_frames</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_menu_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.clear_student_fields">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.clear_student_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear_student_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Clears the input fields in the student form.</span>
+
+<span class="sd">        Resets the student-related fields to their default values.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_name_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_age_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_email_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="SchoolManagementApp.clear_instructor_fields">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.clear_instructor_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear_instructor_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Clears the input fields in the instructor form.</span>
+
+<span class="sd">        Resets the instructor-related fields to their default values.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="SchoolManagementApp.clear_course_fields">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.clear_course_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear_course_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Clears the input fields in the course form.</span>
+
+<span class="sd">        Resets the course-related fields to their default values.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_id_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_name_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.register_student_for_course">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.register_student_for_course">[docs]</a>
+    <span class="k">def</span> <span class="nf">register_student_for_course</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Registers a student for a specific course.</span>
+
+<span class="sd">        Retrieves the student ID and selected course ID from the input fields,</span>
+<span class="sd">        and updates the student&#39;s record accordingly.</span>
+
+<span class="sd">        :raises: ValueError: If any input field is empty.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">student_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">register_student_id_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">selected_course_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_course_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">student_id</span> <span class="ow">and</span> <span class="n">selected_course_id</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="o">.</span><span class="n">get_student_by_id</span><span class="p">(</span><span class="s1">&#39;Data/students.json&#39;</span><span class="p">,</span> <span class="n">student_id</span><span class="p">)</span>
+                <span class="n">course</span> <span class="o">=</span> <span class="n">Course</span><span class="o">.</span><span class="n">load_course_by_id</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">,</span> <span class="n">selected_course_id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">student</span> <span class="ow">and</span> <span class="n">course</span><span class="p">:</span>
+                    <span class="n">student</span><span class="o">.</span><span class="n">register_course</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Student registered for the course successfully&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">register_student_id_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">selected_course_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Student or Course not found&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;Please fill in all fields&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.assign_instructor_to_course">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.assign_instructor_to_course">[docs]</a>
+    <span class="k">def</span> <span class="nf">assign_instructor_to_course</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Assigns an instructor to a specific course.</span>
+
+<span class="sd">        Retrieves the instructor ID and selected course ID from the input fields,</span>
+<span class="sd">        and updates the instructor&#39;s record accordingly.</span>
+
+<span class="sd">        :raises: ValueError: If any input field is empty.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">instructor_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_id_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">selected_course_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">instructor_id</span> <span class="ow">and</span> <span class="n">selected_course_id</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">instructor</span> <span class="o">=</span> <span class="n">Instructor</span><span class="o">.</span><span class="n">load_instructor_by_id</span><span class="p">(</span><span class="s1">&#39;Data/instructors.json&#39;</span><span class="p">,</span> <span class="n">instructor_id</span><span class="p">)</span>
+                <span class="n">course</span> <span class="o">=</span> <span class="n">Course</span><span class="o">.</span><span class="n">load_course_by_id</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">,</span> <span class="n">selected_course_id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">instructor</span> <span class="ow">and</span> <span class="n">course</span><span class="p">:</span>
+                    <span class="n">instructor</span><span class="o">.</span><span class="n">assign_course</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Instructor </span><span class="si">{</span><span class="n">instructor</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> assigned to course </span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">course_name</span><span class="si">}</span><span class="s2"> successfully&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">assign_instructor_id_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">assign_course_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Instructor or Course not found&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;Please fill in all fields&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.display_all_students">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.display_all_students">[docs]</a>
+    <span class="k">def</span> <span class="nf">display_all_students</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Displays all students in the system.</span>
+
+<span class="sd">        Loads student data from a file and creates a tree view to display it.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">students</span> <span class="o">=</span> <span class="n">Student</span><span class="o">.</span><span class="n">load_all_students</span><span class="p">(</span><span class="s1">&#39;Data/students.json&#39;</span><span class="p">)</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Email&quot;</span><span class="p">,</span> <span class="s2">&quot;Student ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Registered Courses&quot;</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">get_email</span><span class="p">(),</span> <span class="n">s</span><span class="o">.</span><span class="n">student_id</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">registered_courses</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">students</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_display_treeview</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span><span class="s2">&quot;student&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.display_all_instructors">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.display_all_instructors">[docs]</a>
+    <span class="k">def</span> <span class="nf">display_all_instructors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Displays all instructors in the system.</span>
+
+<span class="sd">        Loads instructor data from a file and creates a tree view to display it.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">instructors</span> <span class="o">=</span> <span class="n">Instructor</span><span class="o">.</span><span class="n">load_all_instructors</span><span class="p">(</span><span class="s1">&#39;Data/instructors.json&#39;</span><span class="p">)</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Email&quot;</span><span class="p">,</span> <span class="s2">&quot;Instructor ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Courses Taught&quot;</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">get_email</span><span class="p">(),</span> <span class="n">i</span><span class="o">.</span><span class="n">instructor_id</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">assigned_courses</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">instructors</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_display_treeview</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span><span class="s2">&quot;instructor&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.display_all_courses">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.display_all_courses">[docs]</a>
+    <span class="k">def</span> <span class="nf">display_all_courses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Displays all courses in the system.</span>
+
+<span class="sd">        Loads course data from a file and creates a tree view to display it.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">courses</span> <span class="o">=</span> <span class="n">Course</span><span class="o">.</span><span class="n">load_all_courses_fully</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">)</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Course ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Course Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Instructor&quot;</span><span class="p">,</span> <span class="s2">&quot;Enrolled Students&quot;</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">c</span><span class="o">.</span><span class="n">course_id</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">course_name</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">instructor</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">instructor</span> <span class="k">else</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">enrolled_students</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">courses</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_display_treeview</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span><span class="s2">&quot;course&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="SchoolManagementApp.perform_search">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.perform_search">[docs]</a>
+    <span class="k">def</span> <span class="nf">perform_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Performs a search for students, instructors, or courses based on user input.</span>
+
+<span class="sd">        Searches records according to the specified criteria and displays the results.</span>
+
+<span class="sd">        :raises: Warning if no search value is provided.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">search_by</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_by_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">search_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_in_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">search_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_value_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">search_value</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;Please enter a search value.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">search_in</span> <span class="o">==</span> <span class="s2">&quot;Student&quot;</span><span class="p">:</span>
+            <span class="n">students</span> <span class="o">=</span> <span class="n">Student</span><span class="o">.</span><span class="n">load_all_students</span><span class="p">(</span><span class="s1">&#39;Data/students.json&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">search_by</span> <span class="o">==</span> <span class="s2">&quot;ID&quot;</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">students</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">student_id</span> <span class="o">==</span> <span class="n">search_value</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">students</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">search_value</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+                <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Email&quot;</span><span class="p">,</span> <span class="s2">&quot;Student ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Registered Courses&quot;</span><span class="p">]</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">get_email</span><span class="p">(),</span> <span class="n">s</span><span class="o">.</span><span class="n">student_id</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">registered_courses</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">create_display_treeview</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span><span class="s2">&quot;student&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;No Results&quot;</span><span class="p">,</span> <span class="s2">&quot;No student found.&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">search_in</span> <span class="o">==</span> <span class="s2">&quot;Instructor&quot;</span><span class="p">:</span>
+            <span class="n">instructors</span> <span class="o">=</span> <span class="n">Instructor</span><span class="o">.</span><span class="n">load_all_instructors</span><span class="p">(</span><span class="s1">&#39;Data/instructors.json&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">search_by</span> <span class="o">==</span> <span class="s2">&quot;ID&quot;</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">instructors</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">instructor_id</span> <span class="o">==</span> <span class="n">search_value</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">instructors</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">search_value</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+                <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Email&quot;</span><span class="p">,</span> <span class="s2">&quot;Instructor ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Courses Taught&quot;</span><span class="p">]</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">get_email</span><span class="p">(),</span> <span class="n">i</span><span class="o">.</span><span class="n">instructor_id</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">assigned_courses</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">create_display_treeview</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span><span class="s2">&quot;instructor&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;No Results&quot;</span><span class="p">,</span> <span class="s2">&quot;No instructor found.&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">search_in</span> <span class="o">==</span> <span class="s2">&quot;Course&quot;</span><span class="p">:</span>
+            <span class="n">courses</span> <span class="o">=</span> <span class="n">Course</span><span class="o">.</span><span class="n">load_all_courses_fully</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">search_by</span> <span class="o">==</span> <span class="s2">&quot;ID&quot;</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">courses</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">course_id</span> <span class="o">==</span> <span class="n">search_value</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">courses</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">course_name</span> <span class="o">==</span> <span class="n">search_value</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+                <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Course ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Course Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Instructor&quot;</span><span class="p">,</span> <span class="s2">&quot;Enrolled Students&quot;</span><span class="p">]</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">c</span><span class="o">.</span><span class="n">course_id</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">course_name</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">instructor</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">instructor</span> <span class="k">else</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">enrolled_students</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">create_display_treeview</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span><span class="s2">&quot;course&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;No Results&quot;</span><span class="p">,</span> <span class="s2">&quot;No course found.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.delete_record">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.delete_record">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Deletes a selected record based on the specified category.</span>
+
+<span class="sd">        Prompts the user for confirmation before deletion.</span>
+
+<span class="sd">        :param category: The type of record to delete (&#39;student&#39;, &#39;instructor&#39;, or &#39;course&#39;).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;tree&#39;</span><span class="p">):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;No records are currently being displayed.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">selected_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">selected_item</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2"> selected for deletion.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">selected_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selected_item</span><span class="p">)[</span><span class="s1">&#39;values&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;course&quot;</span><span class="p">):</span>
+            <span class="n">selected_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selected_item</span><span class="p">)[</span><span class="s1">&#39;values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">selected_id</span><span class="p">)</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;student&quot;</span><span class="p">:</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="n">Student</span><span class="o">.</span><span class="n">get_student_by_id</span><span class="p">(</span><span class="s1">&#39;Data/students.json&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">selected_id</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;instructor&quot;</span><span class="p">:</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="n">Instructor</span><span class="o">.</span><span class="n">load_instructor_by_id</span><span class="p">(</span><span class="s1">&#39;Data/instructors.json&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">selected_id</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;course&quot;</span><span class="p">:</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="n">Course</span><span class="o">.</span><span class="n">load_course_by_id</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">selected_id</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown category&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">record</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">messagebox</span><span class="o">.</span><span class="n">askyesno</span><span class="p">(</span><span class="s2">&quot;Confirm Delete&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Are you sure you want to delete this </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">?&quot;</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;student&quot;</span><span class="p">:</span>
+                        <span class="n">record</span><span class="o">.</span><span class="n">delete_from_file</span><span class="p">(</span><span class="s1">&#39;Data/students.json&#39;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;instructor&quot;</span><span class="p">:</span>
+                        <span class="n">record</span><span class="o">.</span><span class="n">delete_from_file</span><span class="p">(</span><span class="s1">&#39;Data/instructors.json&#39;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;course&quot;</span><span class="p">:</span>
+                        <span class="n">record</span><span class="o">.</span><span class="n">delete_from_file</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">)</span>
+
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> record deleted successfully&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;student&quot;</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">display_all_students</span><span class="p">()</span>
+                    <span class="k">elif</span> <span class="p">(</span><span class="n">category</span><span class="o">==</span><span class="s2">&quot;instructor&quot;</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">display_all_instructors</span><span class="p">()</span>
+                    <span class="k">elif</span> <span class="p">(</span><span class="n">category</span><span class="o">==</span><span class="s2">&quot;course&quot;</span><span class="p">):</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">display_all_courses</span><span class="p">()</span>
+                    
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.save_edit">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.save_edit">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Initiates the editing process for a selected record.</span>
+
+<span class="sd">        Displays input fields pre-filled with the selected record&#39;s data for editing.</span>
+
+<span class="sd">        :param category: The type of record to edit (&#39;student&#39;, &#39;instructor&#39;, or &#39;course&#39;).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">selected_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">selected_item</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2"> selected for editing.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">selected_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selected_item</span><span class="p">)[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="o">.</span><span class="n">winfo_children</span><span class="p">():</span>
+            <span class="n">widget</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry_fields</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;student&quot;</span><span class="p">:</span>
+            <span class="n">fields_to_edit</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Email&quot;</span><span class="p">]</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;instructor&quot;</span><span class="p">:</span>
+            <span class="n">fields_to_edit</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Email&quot;</span><span class="p">]</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;course&quot;</span><span class="p">:</span>
+            <span class="n">fields_to_edit</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Course Name&quot;</span><span class="p">]</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown category for editing.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">field</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">fields_to_edit</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">field</span><span class="p">)</span>
+            <span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="p">)</span>
+            <span class="n">entry</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">selected_data</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">entry</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entry_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+        <span class="n">save_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Save Changes&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_changes</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">selected_data</span><span class="p">))</span>
+        <span class="n">save_button</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">display_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Back to Main Menu&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementApp.save_changes">
+<a class="viewcode-back" href="../../lab3.html#lab3.tkinter_part2.SchoolManagementApp.save_changes">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_changes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">original_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Saves changes made to a selected record.</span>
+
+<span class="sd">        Updates the record in the appropriate file and refreshes the display.</span>
+
+<span class="sd">        :param category: The type of record being edited (&#39;student&#39;, &#39;instructor&#39;, or &#39;course&#39;).</span>
+<span class="sd">        :param original_data: The original data of the record before editing.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">updated_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">entry_fields</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;student&quot;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">original_data</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                <span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="o">.</span><span class="n">get_student_by_id</span><span class="p">(</span><span class="s1">&#39;Data/students.json&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">original_data</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span> 
+                <span class="k">if</span> <span class="n">student</span><span class="p">:</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">updated_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">assert</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">),</span> <span class="s2">&quot;Name must be a string&quot;</span> 
+                    <span class="k">assert</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="s2">&quot;name cannot be empty&quot;</span>
+                    <span class="k">assert</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[a-zA-Z\s]+$&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="s2">&quot;Name must contain only alphabetic characters and spaces&quot;</span>
+                    <span class="n">student</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+                    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">updated_data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">assert</span> <span class="p">(</span><span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;Age cannot be negative&quot;</span>
+                    <span class="n">student</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+                    <span class="n">email</span> <span class="o">=</span> <span class="n">updated_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$&#39;</span>
+                    <span class="k">assert</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">),</span> <span class="s2">&quot;Wrong email format&quot;</span>
+                    <span class="n">student</span><span class="o">.</span><span class="n">_email</span> <span class="o">=</span> <span class="n">email</span>
+                    <span class="n">student</span><span class="o">.</span><span class="n">update_file</span><span class="p">(</span><span class="s1">&#39;Data/students.json&#39;</span><span class="p">)</span> 
+            <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;instructor&quot;</span><span class="p">:</span>
+                <span class="n">instructor</span> <span class="o">=</span> <span class="n">Instructor</span><span class="o">.</span><span class="n">load_instructor_by_id</span><span class="p">(</span><span class="s1">&#39;Data/instructors.json&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">original_data</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="n">instructor</span><span class="p">:</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">updated_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">assert</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">),</span> <span class="s2">&quot;Name must be a string&quot;</span> 
+                    <span class="k">assert</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="s2">&quot;name cannot be empty&quot;</span>
+                    <span class="k">assert</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[a-zA-Z\s]+$&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="s2">&quot;Name must contain only alphabetic characters and spaces&quot;</span>
+                    <span class="n">instructor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+                    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">updated_data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">assert</span> <span class="p">(</span><span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;Age cannot be negative&quot;</span>
+                    <span class="n">instructor</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+                    <span class="n">email</span> <span class="o">=</span> <span class="n">updated_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$&#39;</span>
+                    <span class="k">assert</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">),</span> <span class="s2">&quot;Wrong email format&quot;</span>
+                    <span class="n">instructor</span><span class="o">.</span><span class="n">_email</span> <span class="o">=</span> <span class="n">email</span>
+                    <span class="n">instructor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s1">&#39;Data/instructors.json&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;course&quot;</span><span class="p">:</span>
+                <span class="n">course</span> <span class="o">=</span> <span class="n">Course</span><span class="o">.</span><span class="n">load_course_by_id</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">original_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="n">course</span><span class="p">:</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">updated_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">assert</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">),</span> <span class="s2">&quot;Name must be a string&quot;</span> 
+                    <span class="k">assert</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="s2">&quot;name cannot be empty&quot;</span>
+                    <span class="k">assert</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^[a-zA-Z\s]+$&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="s2">&quot;Name must contain only alphabetic characters and spaces&quot;</span>
+                    <span class="n">course</span><span class="o">.</span><span class="n">course_name</span> <span class="o">=</span> <span class="n">name</span>
+                    <span class="n">course</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s1">&#39;Data/courses.json&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+             <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+             <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;student&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_all_students</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;instructor&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_all_instructors</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;course&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_all_courses</span><span class="p">()</span>
+
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> updated successfully!&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">SchoolManagementApp</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Hassan Miskawi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

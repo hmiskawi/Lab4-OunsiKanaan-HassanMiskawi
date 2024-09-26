@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Test",
+        "age": 54,
+        "email": "test@gmail.com",
+        "instructor_id": "12345",
+        "assigned_courses": [
+            "1"
+        ]
+    },
+    {
+        "name": "Other",
+        "age": 72,
+        "email": "other@aub.edu.lb",
+        "instructor_id": "123456",
+        "assigned_courses": [
+            "2"
+        ]
+    }
+]
